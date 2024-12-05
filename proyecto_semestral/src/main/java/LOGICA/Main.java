@@ -1,17 +1,27 @@
 package LOGICA;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.time.LocalDateTime;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        Administrador admin = new Administrador();
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+        LocalDateTime fechaHora = LocalDateTime.of(2024, 12, 10, 15, 30); // Año, mes, día, hora, minuto
+        Recorrido recorrido1 = admin.crearRecorrido("Santiago", "Valparaíso", 5000, 1, fechaHora);
+
+        // Mostrar información del recorrido
+        System.out.println(recorrido1);
+
+        // Comprar un asiento
+        int precioBoleto = recorrido1.comprarAsiento(1);
+        if (precioBoleto != -1) {
+            System.out.println("Asiento comprado. Precio total: " + precioBoleto);
+        }
+
+        // Intentar comprar el mismo asiento nuevamente
+        precioBoleto = recorrido1.comprarAsiento(1);
+        if (precioBoleto == -1) {
+            System.out.println("No se pudo comprar el asiento, ya está ocupado.");
         }
     }
 }

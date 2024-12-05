@@ -1,20 +1,17 @@
 package LOGICA;
 
 public class CrearAsientos {
-    private Asientos asientos;
+    private Asientos asiento;
 
     public CrearAsientos() {
-
     }
 
-    public Asientos crearAsientos (String tipoAsiento, int numeroAsiento, boolean estado, String ubicacion, int precio) {
-        if (tipoAsiento.equals("Normal")) {
-            asientos = new AsientoNormal(numeroAsiento, estado, tipoAsiento, ubicacion, precio);
-        } else if (tipoAsiento.equals("SemiCama")) {
-            asientos = new AsientoSemiCama(numeroAsiento, estado, tipoAsiento, ubicacion, precio);
-        } else if (tipoAsiento.equals("Cama")) {
-            asientos = new AsientoCama(numeroAsiento, estado, tipoAsiento, ubicacion, precio);
+    public Asientos crear_Asiento(TipoAsiento tipo, int numero) {
+        switch (tipo) {
+            case NORMAL -> asiento = new AsientoNormal(numero);
+            case SEMICAMA -> asiento = new AsientoSemiCama(numero);
+            case CAMA -> asiento = new AsientoCama(numero);
         }
-        return asientos;
+        return asiento;
     }
 }
