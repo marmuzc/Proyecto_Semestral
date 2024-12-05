@@ -1,8 +1,8 @@
 package LOGICA;
 
-public class CrearBus {
+public class CrearBusFactory {
     private Bus bus;
-    public CrearBus() {
+    public CrearBusFactory() {
     }
 
     /**

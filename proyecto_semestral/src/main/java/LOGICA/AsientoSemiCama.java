@@ -1,7 +1,7 @@
 package LOGICA;
 
 public class AsientoSemiCama extends Asientos {
-    private final TipoAsiento normal = TipoAsiento.NORMAL;
+    private final TipoAsiento normal = TipoAsiento.SEMICAMA;
     public AsientoSemiCama(int numero) {
         super(numero);
         precio = normal.getPrecio();

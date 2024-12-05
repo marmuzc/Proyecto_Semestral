@@ -9,10 +9,10 @@ public abstract class Bus {
     private int totalAsientos;
     private int costo;
     private final ArrayList<Asientos> asientos;
-    private final CrearAsientos crearAsientos;
+    private final CrearAsientosFactory crearAsientos;
 
     public Bus() {
-        crearAsientos = new CrearAsientos();
+        crearAsientos = new CrearAsientosFactory();
         asientos = new ArrayList<>();
     }
 
@@ -41,7 +41,7 @@ public abstract class Bus {
         int contador = 0;
 
         while (contador < cantidad) {
-            Asientos aux = crearAsientos.crear_Asiento(tipo, inicio + contador);
+            Asientos aux = crearAsientos.crearAsiento(tipo, inicio + contador);
             asientos.add(aux);
             contador++;
         }

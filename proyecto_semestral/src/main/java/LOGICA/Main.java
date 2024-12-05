@@ -7,10 +7,11 @@ public class Main {
         Administrador admin = new Administrador();
 
         LocalDateTime fechaHora = LocalDateTime.of(2024, 12, 10, 15, 30); // Año, mes, día, hora, minuto
-        Recorrido recorrido1 = admin.crearRecorrido("Santiago", "Valparaíso", 5000, 1, fechaHora);
+        Recorrido recorrido1 = admin.crearRecorrido("Santiago", "Valparaíso", 5000, 2, fechaHora);
 
         // Mostrar información del recorrido
         System.out.println(recorrido1);
+
 
         // Comprar un asiento
         int precioBoleto = recorrido1.comprarAsiento(1);

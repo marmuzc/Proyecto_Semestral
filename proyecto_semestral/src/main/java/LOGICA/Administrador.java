@@ -4,11 +4,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Administrador {
-    private final CrearBus creadorDeBuses;
+    private final CrearBusFactory creadorDeBuses;
     private final ArrayList<Recorrido> recorridos;
 
     public Administrador() {
-        this.creadorDeBuses = new CrearBus();
+        this.creadorDeBuses = new CrearBusFactory();
         this.recorridos = new ArrayList<>();
     }
 
