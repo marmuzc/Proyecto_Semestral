@@ -1,7 +1,5 @@
 package LOGICA;
 
-import java.time.LocalDateTime;
-
 public class CrearRecorridoFactory {
     private final CrearBusFactory creadorDeBuses;
 
@@ -16,15 +14,22 @@ public class CrearRecorridoFactory {
     /**
      * Crea un nuevo recorrido con un bus asignado.
      *
-     * @param origen    El punto de partida del recorrido.
-     * @param destino   El punto de llegada del recorrido.
-     * @param precio    El costo del recorrido.
-     * @param pisos     Número de pisos del bus asignado.
-     * @param fechaHora La fecha y hora del recorrido.
-     * @return Un objeto de tipo Recorrido.
+     * @param origen  El punto de partida del recorrido.
+     * @param destino El punto de llegada del recorrido.
+     * @param precio  El costo del recorrido.
+     * @param pisos   Número de pisos del bus asignado.
+     * @param fecha   La fecha del recorrido en formato DD/MM.
+     * @param hora    La hora del recorrido en formato HH:mm.
+     * @return Un objeto de tipo Recorrido, o null si el número de pisos es inválido.
      */
-    public Recorrido crearRecorrido(String origen, String destino, int precio, int pisos, LocalDateTime fechaHora) {
+    public Recorrido crearRecorrido(String origen, String destino, int precio, int pisos, String fecha, String hora) {
         Bus bus = creadorDeBuses.crearBus(pisos);
-        return new Recorrido(origen, destino, precio, bus, fechaHora);
+
+        // Manejar caso de número de pisos inválido
+        if (bus == null) {
+            return null;
+        }
+
+        return new Recorrido(origen, destino, precio, bus, fecha, hora);
     }
 }

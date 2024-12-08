@@ -1,6 +1,5 @@
 package LOGICA;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Recorrido {
@@ -8,14 +7,36 @@ public class Recorrido {
     private final String destino;
     private final int precioBase;
     private final Bus bus;
-    private final LocalDateTime fechaHora;
+    private final String fecha; // Formato: DD/MM
+    private final String hora;  // Formato: HH:mm
 
-    public Recorrido(String origen, String destino, int precioBase, Bus bus, LocalDateTime fechaHora) {
+    public Recorrido(String origen, String destino, int precioBase, Bus bus, String fecha, String hora) {
+        if (!fecha.matches("\\d{2}/\\d{2}")) {
+            throw new IllegalArgumentException("La fecha debe tener el formato DD/MM.");
+        }
+        if (!hora.matches("\\d{2}:\\d{2}")) {
+            throw new IllegalArgumentException("La hora debe tener el formato HH:mm.");
+        }
+        if (precioBase < 0) {
+            throw new IllegalArgumentException("El precio base no puede ser negativo.");
+        }
+        if (bus == null) {
+            throw new IllegalArgumentException("El bus no puede ser null.");
+        }
+        if (origen == null || destino == null) {
+            throw new IllegalArgumentException("El origen y destino no pueden ser null.");
+        }
+        if (origen.equals(destino)) {
+            throw new IllegalArgumentException("El origen y destino no pueden ser iguales.");
+        }
+
+
         this.origen = origen;
         this.destino = destino;
         this.precioBase = precioBase;
         this.bus = bus;
-        this.fechaHora = fechaHora;
+        this.fecha = fecha;
+        this.hora = hora;
     }
 
     public String getOrigen() {
@@ -34,8 +55,12 @@ public class Recorrido {
         return bus;
     }
 
-    public LocalDateTime getFechaHora() {
-        return fechaHora;
+    public String getFecha() {
+        return fecha;
+    }
+
+    public String getHora() {
+        return hora;
     }
 
     /**
@@ -45,7 +70,7 @@ public class Recorrido {
      * @return El precio total del boleto (precio del recorrido + precio del asiento).
      */
     public int comprarAsiento(int numeroAsiento) {
-        ArrayList<Asientos> asientos = bus.getAsientosArray(); // Usamos el método correcto
+        ArrayList<Asientos> asientos = bus.getAsientosArray();
 
         for (Asientos asiento : asientos) {
             if (asiento.getNumero() == numeroAsiento) {
@@ -68,8 +93,9 @@ public class Recorrido {
                 "origen='" + origen + '\'' +
                 ", destino='" + destino + '\'' +
                 ", precioBase=" + precioBase +
-                ", bus=" + bus.getTipo() +
-                ", fechaHora=" + fechaHora +
+                ", bus=" +
+                ", fecha='" + fecha + '\'' +
+                ", hora='" + hora + '\'' +
                 '}';
     }
 }

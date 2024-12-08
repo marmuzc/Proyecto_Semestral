@@ -14,7 +14,9 @@ public class CrearBusFactory {
         switch (pisos) {
             case 1 -> bus = new BusUnPiso();
             case 2 -> bus = new BusDosPisos();
+            default -> bus = null; // Caso inválido
         }
         return bus;
     }
+
 }
