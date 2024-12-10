@@ -30,7 +30,6 @@ public class Recorrido {
             throw new IllegalArgumentException("El origen y destino no pueden ser iguales.");
         }
 
-
         this.origen = origen;
         this.destino = destino;
         this.precioBase = precioBase;
