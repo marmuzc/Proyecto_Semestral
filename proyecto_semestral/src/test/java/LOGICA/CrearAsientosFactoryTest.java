@@ -4,8 +4,15 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Clase de pruebas para la clase CrearAsientosFactory.
+ */
 public class CrearAsientosFactoryTest {
 
+    /**
+     * Prueba para crear un asiento de tipo NORMAL.
+     * Se verifica que el asiento se crea correctamente y sus atributos son los esperados.
+     */
     @Test
     public void testCrearAsientoNormal() {
         CrearAsientosFactory factory = new CrearAsientosFactory();
@@ -19,6 +26,10 @@ public class CrearAsientosFactoryTest {
         System.out.println("Asiento creado: " + asiento);
     }
 
+    /**
+     * Prueba para crear un asiento de tipo SEMICAMA.
+     * Se verifica que el asiento se crea correctamente y sus atributos son los esperados.
+     */
     @Test
     public void testCrearAsientoSemiCama() {
         CrearAsientosFactory factory = new CrearAsientosFactory();
@@ -32,6 +43,10 @@ public class CrearAsientosFactoryTest {
         System.out.println("Asiento creado: " + asiento);
     }
 
+    /**
+     * Prueba para crear un asiento de tipo CAMA.
+     * Se verifica que el asiento se crea correctamente y sus atributos son los esperados.
+     */
     @Test
     public void testCrearAsientoCama() {
         CrearAsientosFactory factory = new CrearAsientosFactory();
@@ -45,6 +60,10 @@ public class CrearAsientosFactoryTest {
         System.out.println("Asiento creado: " + asiento);
     }
 
+    /**
+     * Prueba para crear un asiento con un tipo de asiento nulo.
+     * Se verifica que se lanza una excepción NullPointerException.
+     */
     @Test
     public void testCrearAsientoTipoInvalido() {
         CrearAsientosFactory factory = new CrearAsientosFactory();

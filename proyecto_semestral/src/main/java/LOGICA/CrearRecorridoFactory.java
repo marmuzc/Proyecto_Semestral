@@ -1,5 +1,8 @@
 package LOGICA;
 
+/**
+ * Clase CrearRecorridoFactory que se encarga de crear recorridos con un bus asignado.
+ */
 public class CrearRecorridoFactory {
     private final CrearBusFactory creadorDeBuses;
 

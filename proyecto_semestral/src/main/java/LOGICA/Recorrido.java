@@ -2,6 +2,9 @@ package LOGICA;
 
 import java.util.ArrayList;
 
+/**
+ * Clase Recorrido que representa un recorrido de bus.
+ */
 public class Recorrido {
     private final String origen;
     private final String destino;
@@ -10,6 +13,17 @@ public class Recorrido {
     private final String fecha; // Formato: DD/MM
     private final String hora;  // Formato: HH:mm
 
+    /**
+     * Constructor de la clase Recorrido.
+     *
+     * @param origen     El punto de partida del recorrido.
+     * @param destino    El punto de llegada del recorrido.
+     * @param precioBase El costo base del recorrido.
+     * @param bus        El bus asignado al recorrido.
+     * @param fecha      La fecha del recorrido en formato DD/MM.
+     * @param hora       La hora del recorrido en formato HH:mm.
+     * @throws IllegalArgumentException Si alguno de los parámetros es inválido.
+     */
     public Recorrido(String origen, String destino, int precioBase, Bus bus, String fecha, String hora) {
         if (!fecha.matches("\\d{2}/\\d{2}")) {
             throw new IllegalArgumentException("La fecha debe tener el formato DD/MM.");
@@ -92,7 +106,7 @@ public class Recorrido {
                 "origen='" + origen + '\'' +
                 ", destino='" + destino + '\'' +
                 ", precioBase=" + precioBase +
-                ", bus=" +
+                ", bus=" + bus +
                 ", fecha='" + fecha + '\'' +
                 ", hora='" + hora + '\'' +
                 '}';

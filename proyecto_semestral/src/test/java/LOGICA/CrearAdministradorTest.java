@@ -6,15 +6,26 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.BeforeEach;
 import java.util.ArrayList;
 
+/**
+ * Clase de pruebas para la clase Administrador.
+ */
 public class CrearAdministradorTest {
     Administrador administrador = Administrador.getInstance();
+
+    /**
+     * Configuración inicial antes de cada prueba.
+     * Se obtiene la instancia del administrador y se limpia la lista de recorridos.
+     */
     @BeforeEach
     public void setUp() {
         administrador = Administrador.getInstance();
         administrador.getRecorridos().clear(); // Limpiar la lista de recorridos
     }
 
-
+    /**
+     * Prueba para crear un recorrido válido.
+     * Se verifica que el recorrido se crea correctamente y se añade a la lista de recorridos.
+     */
     @Test
     @DisplayName("Test Crear Recorrido valido")
     public void testCrearRecorridoValido() {
@@ -33,7 +44,10 @@ public class CrearAdministradorTest {
         System.out.println("Recorrido creado: " + recorrido);
     }
 
-
+    /**
+     * Prueba para crear un recorrido con una fecha inválida.
+     * Se verifica que se lanza una excepción con el mensaje adecuado.
+     */
     @Test
     @DisplayName("Test Crear Recorrido con Fecha invalida")
     public void testCrearRecorridoFechaInvalida() {
@@ -43,7 +57,10 @@ public class CrearAdministradorTest {
         System.out.println("Excepción lanzada: " + exception.getMessage());
     }
 
-
+    /**
+     * Prueba para crear un recorrido con una hora inválida.
+     * Se verifica que se lanza una excepción con el mensaje adecuado.
+     */
     @Test
     @DisplayName("Test Crear Recorrido con Hora invalida")
     public void testCrearRecorridoHoraInvalida() {
@@ -53,7 +70,10 @@ public class CrearAdministradorTest {
         System.out.println("Excepción lanzada: " + exception.getMessage());
     }
 
-
+    /**
+     * Prueba para crear un recorrido con un bus inválido.
+     * Se verifica que se lanza una excepción con el mensaje adecuado.
+     */
     @Test
     @DisplayName("Test Crear Recorrido con Bus invalido")
     public void testCrearRecorridoBusInvalido() {
@@ -63,7 +83,9 @@ public class CrearAdministradorTest {
         System.out.println("Excepción lanzada: " + exception.getMessage());
     }
 
-
+    /**
+     * Prueba para verificar que la lista de recorridos está inicialmente vacía.
+     */
     @Test
     @DisplayName("Test Lista de Recorridos inicialmente vacia")
     public void testListaRecorridosInicialVacia() {
@@ -73,7 +95,10 @@ public class CrearAdministradorTest {
         System.out.println("Recorridos: " + recorridos);
     }
 
-
+    /**
+     * Prueba para crear múltiples recorridos.
+     * Se verifica que se crean correctamente y se añaden a la lista de recorridos.
+     */
     @Test
     @DisplayName("Test Múltiples Recorridos")
     public void testMultiplesRecorridos() {

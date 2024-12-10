@@ -4,6 +4,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Clase de pruebas para la clase CrearRecorridoFactory.
+ */
 public class CrearRecorridoFactoryTest {
     CrearRecorridoFactory recorridoFactory = new CrearRecorridoFactory();
     String origen = "Santiago";
@@ -12,7 +15,10 @@ public class CrearRecorridoFactoryTest {
     String fecha = "01/12";
     String hora = "10:00";
 
-
+    /**
+     * Prueba para crear un recorrido con un número válido de pisos.
+     * Se verifica que el recorrido se crea correctamente y el bus es de un piso.
+     */
     @DisplayName("Test Crear Recorrido piso valido")
     @Test
     public void testCrearRecorridoPisoValido() {
@@ -26,6 +32,10 @@ public class CrearRecorridoFactoryTest {
                 ", Bus: " + (recorrido.getBus() instanceof BusUnPiso ? "Un Piso" : "Desconocido"));
     }
 
+    /**
+     * Prueba para crear un recorrido con un número inválido de pisos.
+     * Se verifica que el recorrido no se crea.
+     */
     @DisplayName("Test Crear Pisos invalidos")
     @Test
     public void testCrearRecorridoConPisosInvalidos() {
@@ -37,6 +47,10 @@ public class CrearRecorridoFactoryTest {
         }
     }
 
+    /**
+     * Prueba para crear un recorrido con fecha y hora válidas.
+     * Se verifica que el recorrido se crea correctamente.
+     */
     @DisplayName("Test Crear Recorrido con Fecha y Hora válidas")
     @Test
     public void testCrearRecorridoValido() {
@@ -51,6 +65,10 @@ public class CrearRecorridoFactoryTest {
         assertEquals("10:00", recorrido.getHora());
     }
 
+    /**
+     * Prueba para crear un recorrido con una fecha inválida.
+     * Se verifica que se lanza una excepción con el mensaje adecuado.
+     */
     @DisplayName("Test Crear Recorrido con Fecha inválida")
     @Test
     public void testCrearRecorridoFechaInvalida() {
@@ -60,6 +78,10 @@ public class CrearRecorridoFactoryTest {
         System.out.println("Excepción lanzada: " + exception.getMessage());
     }
 
+    /**
+     * Prueba para crear un recorrido con una hora inválida.
+     * Se verifica que se lanza una excepción con el mensaje adecuado.
+     */
     @DisplayName("Test Crear Recorrido con Hora inválida")
     @Test
     public void testCrearRecorridoHoraInvalida() {
@@ -69,6 +91,10 @@ public class CrearRecorridoFactoryTest {
         System.out.println("Excepción lanzada: " + exception.getMessage());
     }
 
+    /**
+     * Prueba para crear un recorrido con un precio negativo.
+     * Se verifica que se lanza una excepción con el mensaje adecuado.
+     */
     @DisplayName("Test Crear Recorrido con Precio Negativo")
     @Test
     public void testCrearRecorridoPrecioNegativo() {
@@ -78,6 +104,10 @@ public class CrearRecorridoFactoryTest {
         System.out.println("Excepción lanzada: " + exception.getMessage());
     }
 
+    /**
+     * Prueba para crear un recorrido con origen y destino nulos.
+     * Se verifica que se lanza una excepción con el mensaje adecuado.
+     */
     @DisplayName("Test Crear Recorrido con Origen y Destino nulos")
     @Test
     public void testCrearRecorridoOrigenDestinoNulos() {
@@ -87,6 +117,10 @@ public class CrearRecorridoFactoryTest {
         System.out.println("Excepción lanzada: " + exception.getMessage());
     }
 
+    /**
+     * Prueba para crear un recorrido con origen igual a destino.
+     * Se verifica que se lanza una excepción con el mensaje adecuado.
+     */
     @DisplayName("Test Crear Recorrido con Origen igual a Destino")
     @Test
     public void testCrearRecorridoOrigenIgualDestino() {
@@ -95,5 +129,4 @@ public class CrearRecorridoFactoryTest {
         assertEquals("El origen y destino no pueden ser iguales.", exception.getMessage());
         System.out.println("Excepción lanzada: " + exception.getMessage());
     }
-
 }
