@@ -100,6 +100,24 @@ public class Recorrido {
         return -1;
     }
 
+    /**
+     * Obtiene un asiento específico por su número.
+     *
+     * @param numeroAsiento Número del asiento a buscar.
+     * @return El objeto Asientos si se encuentra; null si no existe.
+     */
+    public Asientos obtenerAsiento(int numeroAsiento) {
+        ArrayList<Asientos> asientos = bus.getAsientosArray();
+
+        for (Asientos asiento : asientos) {
+            if (asiento.getNumero() == numeroAsiento) {
+                return asiento;
+            }
+        }
+
+        return null; // Si no encuentra el asiento
+    }
+
     @Override
     public String toString() {
         return "Recorrido{" +
