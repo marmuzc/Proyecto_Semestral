@@ -17,6 +17,7 @@ public class PanelComprarPasaje extends JPanel {
     private JTextArea areaAsientos;
     private JTextField txtNumeroAsiento;
     private JButton btnComprarAsiento;
+    private PanelVistaAsientos panelVistaAsientos;
 
     public PanelComprarPasaje(Administrador administrador) {
         this.administrador = administrador;
@@ -26,7 +27,7 @@ public class PanelComprarPasaje extends JPanel {
         JPanel panelSuperior = new JPanel(new GridLayout(2, 2, 10, 10));
         JLabel lblSeleccionar = new JLabel("Seleccione un recorrido:");
         comboRecorridos = new JComboBox<>();
-        lblPrecio = new JLabel("Precio: ---");
+        lblPrecio = new JLabel("Precio base: ---");
         JButton btnActualizar = new JButton("Actualizar recorridos");
 
         panelSuperior.add(lblSeleccionar);
@@ -56,23 +57,27 @@ public class PanelComprarPasaje extends JPanel {
                 JFrame ventanaAsientos = new JFrame("Asientos por piso");
                 ventanaAsientos.setLayout(new BorderLayout());
 
-                PanelVistaAsientos panelVistaAsientos = new PanelVistaAsientos(recorrido, event -> {
+                panelVistaAsientos = new PanelVistaAsientos(recorrido, event -> {
                     Asientos asientoSeleccionado = (Asientos) event.getSource();
-                    int numeroAsiento = asientoSeleccionado.getNumero();
-                    int precio = recorrido.comprarAsiento(numeroAsiento);
-                    // Confirmación de compra del asiento
-                    int confirm = JOptionPane.showConfirmDialog(ventanaAsientos,
-                            "¿Desea comprar el asiento " + numeroAsiento + "?" +
-                                    "Detalles:\n- Asiento: " + numeroAsiento +
-                                    "\n- Recorrido: " + recorrido.getOrigen() + " -> " + recorrido.getDestino() +
-                                    "\n- Fecha: " + recorrido.getFecha() + "\n- Hora: " + recorrido.getHora() +
-                                    "\n- Precio: " + precio  + " CLP",
-                            "Confirmar Compra", JOptionPane.YES_NO_OPTION);
+                    if (asientoSeleccionado.isOcupado()) {
+                        JOptionPane.showMessageDialog(ventanaAsientos,
+                                "El asiento ya está ocupado.",
+                                "Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        int numeroAsiento = asientoSeleccionado.getNumero();
+                        int precio = recorrido.comprarAsiento(numeroAsiento);
 
-                    if (confirm == JOptionPane.YES_OPTION) {
-                      //  int precio = recorrido.comprarAsiento(numeroAsiento);
-                        if (precio != -1) {
-                            mostrarAsientosDisponibles(recorrido); // Refrescar la vista
+                        int confirm = JOptionPane.showConfirmDialog(ventanaAsientos,
+                                "¿Desea comprar el asiento " + numeroAsiento + "?" +
+                                        "Detalles:\n- Asiento: " + numeroAsiento +
+                                        "\n- Recorrido: " + recorrido.getOrigen() + " -> " + recorrido.getDestino() +
+                                        "\n- Fecha: " + recorrido.getFecha() + "\n- Hora: " + recorrido.getHora() +
+                                        "\n- Precio: " + precio + " CLP",
+                                "Confirmar Compra", JOptionPane.YES_NO_OPTION);
+
+                        if (confirm == JOptionPane.YES_OPTION && precio != -1) {
+                            mostrarAsientosDisponibles(recorrido); // Refrescar la vista general
+                            panelVistaAsientos.actualizarEstadoAsientos(); // Actualizar la vista detallada
                             JOptionPane.showMessageDialog(ventanaAsientos,
                                     "Asiento comprado exitosamente.\n" +
                                             "Detalles:\n- Asiento: " + numeroAsiento +
@@ -80,9 +85,8 @@ public class PanelComprarPasaje extends JPanel {
                                             "\n- Fecha: " + recorrido.getFecha() + "\n- Hora: " + recorrido.getHora() +
                                             "\n- Precio: " + precio + " CLP",
                                     "Compra Exitosa",
-                                    JOptionPane.INFORMATION_MESSAGE
-                            );
-                        } else {
+                                    JOptionPane.INFORMATION_MESSAGE);
+                        } else if (precio == -1) {
                             JOptionPane.showMessageDialog(ventanaAsientos,
                                     "El asiento ya está ocupado o no existe.",
                                     "Error", JOptionPane.ERROR_MESSAGE);
@@ -90,7 +94,7 @@ public class PanelComprarPasaje extends JPanel {
                     }
                 });
 
-                    ventanaAsientos.add(panelVistaAsientos, BorderLayout.CENTER);
+                ventanaAsientos.add(panelVistaAsientos, BorderLayout.CENTER);
                 ventanaAsientos.setSize(800, 600);
                 ventanaAsientos.setLocationRelativeTo(null);
                 ventanaAsientos.setVisible(true);
@@ -98,6 +102,9 @@ public class PanelComprarPasaje extends JPanel {
                 JOptionPane.showMessageDialog(this, "Seleccione un recorrido primero.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
+
+
+
 
         JPanel panelInferior = new JPanel(new GridLayout(2, 2, 10, 10));
         JLabel lblNumeroAsiento = new JLabel("Número de asiento:");

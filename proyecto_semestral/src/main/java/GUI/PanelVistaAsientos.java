@@ -71,4 +71,29 @@ public class PanelVistaAsientos extends JPanel {
         panelPiso.add(gridAsientos, BorderLayout.CENTER);
         return panelPiso;
     }
+
+    public void actualizarEstadoAsientos() {
+        this.removeAll();
+        ArrayList<Asientos> asientosPiso1 = new ArrayList<>();
+        ArrayList<Asientos> asientosPiso2 = new ArrayList<>();
+
+        int totalAsientos = asientos.size();
+        int asientosPorPiso = totalAsientos / 2;
+
+        int contador = 1;
+        for (Asientos asiento : asientos) {
+            if (contador <= asientosPorPiso) {
+                asientosPiso1.add(asiento);
+            } else {
+                asientosPiso2.add(asiento);
+            }
+            contador++;
+        }
+
+        add(crearPanelDePiso(asientosPiso1, "Piso 1"));
+        add(crearPanelDePiso(asientosPiso2, "Piso 2"));
+        revalidate();
+        repaint();
+    }
+
 }
