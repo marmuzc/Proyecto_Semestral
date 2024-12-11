@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class Ventana extends JFrame {
-    private final String PASSWORD = "1234"; // Contraseña predefinida
+    private final String PASSWORD = "admin123"; // Contraseña predefinida
     private boolean accesoConcedido = false; // Para recordar si ya se verificó la contraseña
 
     public Ventana() {
@@ -36,7 +36,7 @@ public class Ventana extends JFrame {
                 // Mostrar diálogo de contraseña
                 JPasswordField passwordField = new JPasswordField();
                 int result = JOptionPane.showConfirmDialog(this, passwordField,
-                        "Ingrese la contraseña", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                        "Admin, Ingrese la contraseña", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
                 if (result == JOptionPane.OK_OPTION) {
                     String inputPassword = new String(passwordField.getPassword());
