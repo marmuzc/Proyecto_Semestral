@@ -11,7 +11,7 @@ public class Ventana extends JFrame {
     private boolean accesoConcedido = false; // Para recordar si ya se verificó la contraseña
 
     public Ventana() {
-        // Usar el método getInstance del Singleton
+        // Usar el metodo getInstance del Singleton
         Administrador administrador = Administrador.getInstance();
 
         // Crear los paneles
@@ -55,7 +55,7 @@ public class Ventana extends JFrame {
 
         // Configurar la ventana principal
         this.setTitle("Gestión de Recorridos");
-        this.setSize(600, 400);
+        this.setSize(1080, 720);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
         this.add(tabbedPane, BorderLayout.CENTER);

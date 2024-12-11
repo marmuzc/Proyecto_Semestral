@@ -82,7 +82,7 @@ public class PanelCrearRecorrido extends JPanel {
             }
         });
 
-        // Configurar lógica del botón para crear recorrido
+
         btnCrearRecorrido.addActionListener(e -> {
             try {
                 String origen = (String) comboOrigen.getSelectedItem();
@@ -123,7 +123,6 @@ public class PanelCrearRecorrido extends JPanel {
             }
         });
 
-        // Configurar lógica del botón para agregar ciudades
         btnAgregarCiudad.addActionListener(e -> {
             String nuevaCiudad = JOptionPane.showInputDialog(PanelCrearRecorrido.this, "Ingrese el nombre de la nueva ciudad:");
             if (nuevaCiudad != null && !nuevaCiudad.trim().isEmpty() && !ciudadYaExiste(nuevaCiudad)) {
