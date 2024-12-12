@@ -1,9 +1,15 @@
 package LOGICA;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Locale;
+
 
 /**
- * Clase Recorrido que representa un recorrido de bus.
+ * Clase Recorrido que representa el recorrido de un bus.
  */
 public class Recorrido {
     private final String origen;
@@ -16,21 +22,22 @@ public class Recorrido {
     /**
      * Constructor de la clase Recorrido.
      *
-     * @param origen     El punto de partida del recorrido.
-     * @param destino    El punto de llegada del recorrido.
-     * @param precioBase El costo base del recorrido.
+     * @param origen     El punto de origen del recorrido.
+     * @param destino    El punto de destino del recorrido.
+     * @param precioBase El costo base del recorrido (pues asientos tienen precio añadido).
      * @param bus        El bus asignado al recorrido.
      * @param fecha      La fecha del recorrido en formato DD/MM.
      * @param hora       La hora del recorrido en formato HH:mm.
      * @throws IllegalArgumentException Si alguno de los parámetros es inválido.
      */
     public Recorrido(String origen, String destino, int precioBase, Bus bus, String fecha, String hora) {
-        if (!fecha.matches("\\d{2}/\\d{2}")) {
-            throw new IllegalArgumentException("La fecha debe tener el formato DD/MM.");
+        if (!isFechaValida(fecha)) {
+            throw new IllegalArgumentException("La fecha \"" + fecha + "\" no es válida. Asegúrate de que tenga el formato DD/MM.");
         }
-        if (!hora.matches("\\d{2}:\\d{2}")) {
-            throw new IllegalArgumentException("La hora debe tener el formato HH:mm.");
+        if (!isHoraValida(hora)) {
+            throw new IllegalArgumentException("La hora \"" + hora + "\" no es válida. Asegúrate de que tenga el formato HH:mm.");
         }
+
         if (precioBase < 0) {
             throw new IllegalArgumentException("El precio base no puede ser negativo.");
         }
@@ -51,6 +58,30 @@ public class Recorrido {
         this.fecha = fecha;
         this.hora = hora;
     }
+
+    public static boolean isFechaValida(String fecha) {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM")
+                    .withResolverStyle(java.time.format.ResolverStyle.LENIENT);
+            formatter.parse(fecha); // Solo valida el formato
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
+        }
+    }
+
+
+    public static boolean isHoraValida(String hora) {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm", Locale.getDefault());
+            LocalTime.parse(hora, formatter);
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
+        }
+    }
+
+
 
     public String getOrigen() {
         return origen;

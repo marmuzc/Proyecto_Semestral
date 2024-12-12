@@ -6,8 +6,6 @@ import LOGICA.Asientos;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class PanelComprarPasaje extends JPanel {
@@ -17,7 +15,7 @@ public class PanelComprarPasaje extends JPanel {
     private JTextArea areaAsientos;
     private JTextField txtNumeroAsiento;
     private JButton btnComprarAsiento;
-    private PanelVistaAsientos panelVistaAsientos;
+    private PanelAsientos panelAsientos;
 
     public PanelComprarPasaje(Administrador administrador) {
         this.administrador = administrador;
@@ -53,7 +51,7 @@ public class PanelComprarPasaje extends JPanel {
                 JFrame ventanaAsientos = new JFrame("Asientos por piso");
                 ventanaAsientos.setLayout(new BorderLayout());
 
-                panelVistaAsientos = new PanelVistaAsientos(recorrido, event -> {
+                panelAsientos = new PanelAsientos(recorrido, event -> {
                     Asientos asientoSeleccionado = (Asientos) event.getSource();
                     if (asientoSeleccionado.isOcupado()) {
                         JOptionPane.showMessageDialog(ventanaAsientos,
@@ -73,7 +71,7 @@ public class PanelComprarPasaje extends JPanel {
 
                         if (confirm == JOptionPane.YES_OPTION && precio != -1) {
                             mostrarAsientosDisponibles(recorrido);
-                            panelVistaAsientos.actualizarEstadoAsientos();
+                            panelAsientos.actualizarEstadoAsientos();
                             JOptionPane.showMessageDialog(ventanaAsientos,
                                     "Asiento comprado exitosamente.\n" +
                                             "Detalles:\n- Asiento: " + numeroAsiento + "\n- Tipo de asiento: " + asientoSeleccionado.getTipo() +
@@ -90,7 +88,7 @@ public class PanelComprarPasaje extends JPanel {
                     }
                 });
 
-                ventanaAsientos.add(panelVistaAsientos, BorderLayout.CENTER);
+                ventanaAsientos.add(panelAsientos, BorderLayout.CENTER);
                 ventanaAsientos.setSize(1080, 720);
                 ventanaAsientos.setLocationRelativeTo(null);
                 ventanaAsientos.setVisible(true);

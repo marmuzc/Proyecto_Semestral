@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class Ventana extends JFrame {
     private CardLayout cardLayout;
-    private JPanel mainPanel;
+    private JPanel panelPrincipal;
     private boolean accesoConcedido = false;
 
     public Ventana() {
@@ -19,40 +19,39 @@ public class Ventana extends JFrame {
 
         PanelLogin panelLogin = new PanelLogin(() -> {
             accesoConcedido = true;
-            cardLayout.show(mainPanel, "Crear Recorrido");
+            cardLayout.show(panelPrincipal, "Crear Recorrido");
         });
 
         cardLayout = new CardLayout();
-        mainPanel = new JPanel(cardLayout);
-        mainPanel.add(panelComprar, "Comprar Pasaje");
-        mainPanel.add(panelLogin, "Login");
-        mainPanel.add(panelCrear, "Crear Recorrido");
+        panelPrincipal = new JPanel(cardLayout);
+        panelPrincipal.add(panelComprar, "Comprar Pasaje");
+        panelPrincipal.add(panelLogin, "Login");
+        panelPrincipal.add(panelCrear, "Crear Recorrido");
 
-        JTabbedPane tabbedPane = new JTabbedPane();
-        tabbedPane.addTab("Comprar Pasaje", null);
-        tabbedPane.addTab("Crear Recorrido", null);
+        JTabbedPane panelTabs = new JTabbedPane();
+        panelTabs.addTab("Comprar Pasaje", null);
+        panelTabs.addTab("Crear Recorrido", null);
 
-        tabbedPane.addChangeListener(e -> {
-            int selectedIndex = tabbedPane.getSelectedIndex();
+        panelTabs.addChangeListener(e -> {
+            int selectedIndex = panelTabs.getSelectedIndex();
 
             if (selectedIndex == 1) {
                 if (accesoConcedido) {
-                    cardLayout.show(mainPanel, "Crear Recorrido");
+                    cardLayout.show(panelPrincipal, "Crear Recorrido");
                 } else {
-                    cardLayout.show(mainPanel, "Login");
+                    cardLayout.show(panelPrincipal, "Login");
                 }
             } else if (selectedIndex == 0) {
-                cardLayout.show(mainPanel, "Comprar Pasaje");
+                cardLayout.show(panelPrincipal, "Comprar Pasaje");
             }
         });
-
 
         this.setTitle("Reserva de pasajes");
         this.setSize(1080, 720);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
-        this.add(tabbedPane, BorderLayout.NORTH);
-        this.add(mainPanel, BorderLayout.CENTER);
+        this.add(panelTabs, BorderLayout.NORTH);
+        this.add(panelPrincipal, BorderLayout.CENTER);
         this.setVisible(true);
     }
 }

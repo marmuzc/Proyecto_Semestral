@@ -8,12 +8,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class PanelVistaAsientos extends JPanel {
+public class PanelAsientos extends JPanel {
     private Recorrido recorrido;
     private ArrayList<Asientos> asientos;
     private ActionListener onAsientoSeleccionado;
 
-    public PanelVistaAsientos(Recorrido recorrido, ActionListener onAsientoSeleccionado) {
+    public PanelAsientos(Recorrido recorrido, ActionListener onAsientoSeleccionado) {
         this.recorrido = recorrido;
         this.asientos = recorrido.getBus().getAsientosArray();
         this.onAsientoSeleccionado = onAsientoSeleccionado;
@@ -30,13 +30,13 @@ public class PanelVistaAsientos extends JPanel {
             }
         }
 
-        add(crearPanelDePiso(asientosPiso1, "Piso 1"));
+        add(crearPanelDePisos(asientosPiso1, "Piso 1"));
         if (!asientosPiso2.isEmpty()) {
-            add(crearPanelDePiso(asientosPiso2, "Piso 2"));
+            add(crearPanelDePisos(asientosPiso2, "Piso 2"));
         }
     }
 
-    private JPanel crearPanelDePiso(ArrayList<Asientos> asientos, String titulo) {
+    private JPanel crearPanelDePisos(ArrayList<Asientos> asientos, String titulo) {
         JPanel panelPiso = new JPanel(new BorderLayout(10, 10));
         JLabel lblTitulo = new JLabel(titulo, SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 16));
@@ -91,9 +91,9 @@ public class PanelVistaAsientos extends JPanel {
             }
         }
 
-        add(crearPanelDePiso(asientosPiso1, "Piso 1"));
+        add(crearPanelDePisos(asientosPiso1, "Piso 1"));
         if (!asientosPiso2.isEmpty()) {
-            add(crearPanelDePiso(asientosPiso2, "Piso 2"));
+            add(crearPanelDePisos(asientosPiso2, "Piso 2"));
         }
         revalidate();
         repaint();

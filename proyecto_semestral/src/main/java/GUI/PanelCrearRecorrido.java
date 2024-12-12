@@ -69,6 +69,7 @@ public class PanelCrearRecorrido extends JPanel {
                 JOptionPane.showMessageDialog(PanelCrearRecorrido.this, "El origen y el destino no pueden ser la misma ciudad.", "Error", JOptionPane.ERROR_MESSAGE);
                 comboOrigen.setSelectedIndex(0);
             }
+
         });
 
         comboDestino.addActionListener(e -> {
@@ -96,24 +97,22 @@ public class PanelCrearRecorrido extends JPanel {
                     return;
                 }
 
-                if (!fecha.matches("\\d{2}/\\d{2}")) {
-                    JOptionPane.showMessageDialog(PanelCrearRecorrido.this, "La fecha debe tener el formato DD/MM.", "Error", JOptionPane.ERROR_MESSAGE);
+                if (!Recorrido.isFechaValida(fecha)) {
+                    JOptionPane.showMessageDialog(PanelCrearRecorrido.this, "La fecha es inválida o no cumple con el formato DD/MM.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
-                if (!hora.matches("\\d{2}:\\d{2}")) {
-                    JOptionPane.showMessageDialog(PanelCrearRecorrido.this, "La hora debe tener el formato HH:mm.", "Error", JOptionPane.ERROR_MESSAGE);
+                if (!Recorrido.isHoraValida(hora)) {
+                    JOptionPane.showMessageDialog(PanelCrearRecorrido.this, "La hora es inválida o no cumple con el formato HH:mm.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
-                // Usar CrearRecorridoFactory a través del Administrador
                 Recorrido recorrido = administrador.crearRecorrido(origen, destino, precio, pisos, fecha, hora);
 
                 if (recorrido != null) {
                     JOptionPane.showMessageDialog(PanelCrearRecorrido.this, "Recorrido creado exitosamente.");
                     onRecorridoCreado.run();
 
-                    // Reiniciar los campos
                     comboOrigen.setSelectedIndex(0);
                     comboDestino.setSelectedIndex(0);
                     txtPrecio.setText("");
@@ -125,6 +124,8 @@ public class PanelCrearRecorrido extends JPanel {
                 }
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(PanelCrearRecorrido.this, "El precio debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (IllegalArgumentException ex) {
+                JOptionPane.showMessageDialog(PanelCrearRecorrido.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
