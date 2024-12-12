@@ -7,15 +7,15 @@ import java.util.ArrayList;
  */
 public class Administrador {
     private static Administrador instancia;
-    private final CrearBusFactory creadorDeBuses;
+    private final CrearRecorridoFactory creadorDeRecorridos;
     private final ArrayList<Recorrido> recorridos;
 
     /**
      * Constructor privado para evitar la creación de múltiples instancias.
-     * Inicializa la fábrica de buses y la lista de recorridos.
+     * Inicializa la fábrica de recorridos y la lista de recorridos.
      */
     private Administrador() {
-        this.creadorDeBuses = new CrearBusFactory();
+        this.creadorDeRecorridos = new CrearRecorridoFactory();
         this.recorridos = new ArrayList<>();
     }
 
@@ -32,7 +32,7 @@ public class Administrador {
     }
 
     /**
-     * Crea un nuevo recorrido con un bus asignado, una fecha y una hora.
+     * Solicita a CrearRecorridoFactory la creación de un nuevo recorrido y lo agrega a la lista de recorridos.
      *
      * @param origen     El punto de partida del recorrido.
      * @param destino    El punto de llegada del recorrido.
@@ -40,7 +40,7 @@ public class Administrador {
      * @param pisos      Número de pisos del bus.
      * @param fecha      La fecha del recorrido en formato DD/MM.
      * @param hora       La hora del recorrido en formato HH:mm.
-     * @return El recorrido creado.
+     * @return El recorrido creado, o null si no se pudo crear.
      * @throws IllegalArgumentException Si la fecha o la hora no tienen el formato correcto.
      */
     public Recorrido crearRecorrido(String origen, String destino, int precioBase, int pisos, String fecha, String hora) {
@@ -51,9 +51,12 @@ public class Administrador {
             throw new IllegalArgumentException("La hora debe tener el formato HH:mm.");
         }
 
-        Bus bus = creadorDeBuses.crearBus(pisos);
-        Recorrido recorrido = new Recorrido(origen, destino, precioBase, bus, fecha, hora);
-        recorridos.add(recorrido);
+        Recorrido recorrido = creadorDeRecorridos.crearRecorrido(origen, destino, precioBase, pisos, fecha, hora);
+
+        if (recorrido != null) {
+            recorridos.add(recorrido);
+        }
+
         return recorrido;
     }
 

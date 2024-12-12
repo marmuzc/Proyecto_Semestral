@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
 public class PanelComprarPasaje extends JPanel {
     private Administrador administrador;
@@ -55,37 +56,31 @@ public class PanelComprarPasaje extends JPanel {
 
                 panelVistaAsientos = new PanelVistaAsientos(recorrido, event -> {
                     Asientos asientoSeleccionado = (Asientos) event.getSource();
+
                     if (asientoSeleccionado.isOcupado()) {
-                        JOptionPane.showMessageDialog(ventanaAsientos,
+                        JOptionPane.showMessageDialog(this,
                                 "El asiento ya está ocupado.",
                                 "Error", JOptionPane.ERROR_MESSAGE);
                     } else {
                         int numeroAsiento = asientoSeleccionado.getNumero();
-                        int precio = recorrido.comprarAsiento(numeroAsiento);
+                        int precio = asientoSeleccionado.getPrecio(); // Supongo que esto se obtiene del asiento directamente.
 
-                        int confirm = JOptionPane.showConfirmDialog(ventanaAsientos,
+                        int confirm = JOptionPane.showConfirmDialog(this,
                                 "¿Desea comprar el asiento " + numeroAsiento + "?\n" +
                                         "Detalles:\n- Asiento: " + numeroAsiento + "\n- Tipo de asiento: " + asientoSeleccionado.getTipo() +
-                                        "\n- Recorrido: " + recorrido.getOrigen() + " -> " + recorrido.getDestino() +
-                                        "\n- Fecha: " + recorrido.getFecha() + "\n- Hora: " + recorrido.getHora() +
                                         "\n- Precio: " + precio + " CLP",
                                 "Confirmar Compra", JOptionPane.YES_NO_OPTION);
 
-                        if (confirm == JOptionPane.YES_OPTION && precio != -1) {
-                            mostrarAsientosDisponibles(recorrido);
-                            panelVistaAsientos.actualizarEstadoAsientos();
-                            JOptionPane.showMessageDialog(ventanaAsientos,
+                        if (confirm == JOptionPane.YES_OPTION) {
+                            // Aquí confirmas la compra y marcas el asiento como ocupado
+                            asientoSeleccionado.setOcupado(true);
+                            mostrarAsientosDisponibles(recorrido); // Actualiza el listado en el panel.
+                            panelVistaAsientos.actualizarEstadoAsientos(); // Actualiza los botones visualmente.
+                            JOptionPane.showMessageDialog(this,
                                     "Asiento comprado exitosamente.\n" +
                                             "Detalles:\n- Asiento: " + numeroAsiento + "\n- Tipo de asiento: " + asientoSeleccionado.getTipo() +
-                                            "\n- Recorrido: " + recorrido.getOrigen() + " -> " + recorrido.getDestino() +
-                                            "\n- Fecha: " + recorrido.getFecha() + "\n- Hora: " + recorrido.getHora() +
                                             "\n- Precio: " + precio + " CLP",
-                                    "Compra Exitosa",
-                                    JOptionPane.INFORMATION_MESSAGE);
-                        } else if (precio == -1) {
-                            JOptionPane.showMessageDialog(ventanaAsientos,
-                                    "El asiento ya está ocupado o no existe.",
-                                    "Error", JOptionPane.ERROR_MESSAGE);
+                                    "Compra Exitosa", JOptionPane.INFORMATION_MESSAGE);
                         }
                     }
                 });

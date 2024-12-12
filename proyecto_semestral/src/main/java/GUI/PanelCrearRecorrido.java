@@ -1,6 +1,7 @@
 package GUI;
 
 import LOGICA.Administrador;
+import LOGICA.Recorrido;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,10 +11,12 @@ public class PanelCrearRecorrido extends JPanel {
     private final Administrador administrador;
     private final DefaultComboBoxModel<String> modeloCiudadesOrigen;
     private final DefaultComboBoxModel<String> modeloCiudadesDestino;
+    private Recorrido recorrido;
 
     public PanelCrearRecorrido(Runnable onRecorridoCreado) {
         this.administrador = Administrador.getInstance();
         this.setLayout(new GridLayout(9, 2, 10, 10));
+
 
         String[] ciudadesIniciales = {"<<Seleccione Ciudad>>", "Concepción", "Los Angeles", "Chillán", "Santiago", "Talca", "Rancagua"};
         modeloCiudadesOrigen = new DefaultComboBoxModel<>(ciudadesIniciales);
@@ -103,21 +106,29 @@ public class PanelCrearRecorrido extends JPanel {
                     return;
                 }
 
-                administrador.crearRecorrido(origen, destino, precio, pisos, fecha, hora);
-                JOptionPane.showMessageDialog(PanelCrearRecorrido.this, "Recorrido creado exitosamente.");
+                // Usar CrearRecorridoFactory a través del Administrador
+                Recorrido recorrido = administrador.crearRecorrido(origen, destino, precio, pisos, fecha, hora);
 
-                onRecorridoCreado.run();
+                if (recorrido != null) {
+                    JOptionPane.showMessageDialog(PanelCrearRecorrido.this, "Recorrido creado exitosamente.");
+                    onRecorridoCreado.run();
 
-                comboOrigen.setSelectedIndex(0);
-                comboDestino.setSelectedIndex(0);
-                txtPrecio.setText("");
-                comboPisos.setSelectedIndex(0);
-                txtFecha.setText("");
-                txtHora.setText("");
+                    // Reiniciar los campos
+                    comboOrigen.setSelectedIndex(0);
+                    comboDestino.setSelectedIndex(0);
+                    txtPrecio.setText("");
+                    comboPisos.setSelectedIndex(0);
+                    txtFecha.setText("");
+                    txtHora.setText("");
+                } else {
+                    JOptionPane.showMessageDialog(PanelCrearRecorrido.this, "Error al crear el recorrido. Verifique los datos.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(PanelCrearRecorrido.this, "El precio debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
+
+
 
         btnAgregarCiudad.addActionListener(e -> {
             String nuevaCiudad = JOptionPane.showInputDialog(PanelCrearRecorrido.this, "Ingrese el nombre de la nueva ciudad:");

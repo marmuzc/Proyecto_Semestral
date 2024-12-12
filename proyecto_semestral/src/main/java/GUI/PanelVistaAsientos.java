@@ -55,11 +55,27 @@ public class PanelVistaAsientos extends JPanel {
             btnAsiento.setEnabled(!asiento.isOcupado());
 
             btnAsiento.addActionListener(e -> {
-                if (onAsientoSeleccionado != null) {
-                    ActionEvent event = new ActionEvent(asiento, ActionEvent.ACTION_PERFORMED, null);
-                    onAsientoSeleccionado.actionPerformed(event);
+                if (asiento.isOcupado()) {
+                    // Mostrar mensaje de asiento ocupado
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "El asiento ya está ocupado. Por favor, seleccione otro.",
+                            "Asiento Ocupado",
+                            JOptionPane.WARNING_MESSAGE
+                    );
+                } else if (onAsientoSeleccionado != null) {
+                    // Disparar evento para notificar selección de asiento si está disponible
+                    onAsientoSeleccionado.actionPerformed(new ActionEvent(asiento, ActionEvent.ACTION_PERFORMED, null));
+
+                    // Verificar si el asiento ahora está ocupado tras la compra
+                    if (asiento.isOcupado()) {
+                        btnAsiento.setBackground(Color.RED);
+                        btnAsiento.setEnabled(false);
+                    }
                 }
             });
+
+
 
             gridAsientos.add(btnAsiento);
         }
@@ -69,23 +85,25 @@ public class PanelVistaAsientos extends JPanel {
     }
 
     public void actualizarEstadoAsientos() {
-        this.removeAll();
-        ArrayList<Asientos> asientosPiso1 = new ArrayList<>();
-        ArrayList<Asientos> asientosPiso2 = new ArrayList<>();
-
-        for (Asientos asiento : asientos) {
-            if (asiento.getNumero() <= 30) {
-                asientosPiso1.add(asiento);
-            } else {
-                asientosPiso2.add(asiento);
+        Component[] componentes = this.getComponents();
+        for (Component componente : componentes) {
+            if (componente instanceof JPanel) {
+                JPanel panelPiso = (JPanel) componente;
+                for (Component boton : panelPiso.getComponents()) {
+                    if (boton instanceof JButton) {
+                        JButton btnAsiento = (JButton) boton;
+                        int numeroAsiento = Integer.parseInt(btnAsiento.getText());
+                        Asientos asiento = recorrido.obtenerAsiento(numeroAsiento);
+                        if (asiento.isOcupado()) {
+                            btnAsiento.setBackground(Color.RED);
+                            btnAsiento.setEnabled(false);
+                        } else {
+                            btnAsiento.setBackground(Color.GREEN);
+                            btnAsiento.setEnabled(true);
+                        }
+                    }
+                }
             }
         }
-
-        add(crearPanelDePiso(asientosPiso1, "Piso 1"));
-        if (!asientosPiso2.isEmpty()) {
-            add(crearPanelDePiso(asientosPiso2, "Piso 2"));
-        }
-        revalidate();
-        repaint();
     }
 }

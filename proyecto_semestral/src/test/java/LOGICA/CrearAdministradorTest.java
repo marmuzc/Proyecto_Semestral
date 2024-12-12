@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * Clase de pruebas para la clase Administrador.
  */
 public class CrearAdministradorTest {
-    Administrador administrador = Administrador.getInstance();
+    Administrador administrador;
 
     /**
      * Configuración inicial antes de cada prueba.
@@ -32,7 +32,7 @@ public class CrearAdministradorTest {
         Recorrido recorrido = administrador.crearRecorrido(
                 "Santiago", "Valparaíso", 5000, 1, "01/12", "10:00"
         );
-        assertNotNull(recorrido, "El recorrido deberia ser creado correctamente.");
+        assertNotNull(recorrido, "El recorrido debería ser creado correctamente.");
         assertEquals("Santiago", recorrido.getOrigen());
         assertEquals("Valparaíso", recorrido.getDestino());
         assertEquals(5000, recorrido.getPrecioBase());
@@ -41,7 +41,6 @@ public class CrearAdministradorTest {
         ArrayList<Recorrido> recorridos = administrador.getRecorridos();
         assertEquals(1, recorridos.size(), "Debería haber 1 recorrido en la lista.");
         assertSame(recorrido, recorridos.get(0), "El recorrido creado debe estar en la lista.");
-        System.out.println("Recorrido creado: " + recorrido);
     }
 
     /**
@@ -54,7 +53,6 @@ public class CrearAdministradorTest {
         Exception exception = assertThrows(IllegalArgumentException.class, () ->
                 administrador.crearRecorrido("Santiago", "Valparaíso", 5000, 1, "01-12", "10:00"));
         assertEquals("La fecha debe tener el formato DD/MM.", exception.getMessage());
-        System.out.println("Excepción lanzada: " + exception.getMessage());
     }
 
     /**
@@ -72,15 +70,16 @@ public class CrearAdministradorTest {
 
     /**
      * Prueba para crear un recorrido con un bus inválido.
-     * Se verifica que se lanza una excepción con el mensaje adecuado.
+     * Se verifica que el metodo devuelve null.
      */
     @Test
     @DisplayName("Test Crear Recorrido con Bus invalido")
     public void testCrearRecorridoBusInvalido() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () ->
-                administrador.crearRecorrido("Santiago", "Valparaíso", 5000, 3, "01/12", "10:00"));
-        assertEquals("El bus no puede ser null.", exception.getMessage());
-        System.out.println("Excepción lanzada: " + exception.getMessage());
+        Recorrido recorrido = administrador.crearRecorrido("Santiago", "Valparaíso", 5000, 3, "01/12", "10:00");
+        assertNull(recorrido, "El recorrido no debería crearse con un bus inválido.");
+        ArrayList<Recorrido> recorridos = administrador.getRecorridos();
+        assertTrue(recorridos.isEmpty(), "La lista de recorridos debería estar vacía.");
+        System.out.println("El recorrido no fue creado porque el número de pisos es inválido.");
     }
 
     /**
@@ -91,8 +90,8 @@ public class CrearAdministradorTest {
     public void testListaRecorridosInicialVacia() {
         ArrayList<Recorrido> recorridos = administrador.getRecorridos();
         assertNotNull(recorridos, "La lista de recorridos no debería ser null.");
-        assertTrue(recorridos.isEmpty(), "La lista de recorridos debería estar inicialmente vacia.");
-        System.out.println("Recorridos: " + recorridos);
+        assertTrue(recorridos.isEmpty(), "La lista de recorridos debería estar inicialmente vacía.");
+        System.out.println("La lista de recorridos está vacía.");
     }
 
     /**
@@ -108,6 +107,6 @@ public class CrearAdministradorTest {
         assertEquals(2, recorridos.size(), "Deberían haberse creado 2 recorridos.");
         assertEquals("Santiago", recorridos.get(0).getOrigen());
         assertEquals("Viña del Mar", recorridos.get(1).getOrigen());
-        System.out.println("Recorridos: " + recorridos);
+        System.out.println("Se crearon 2 recorridos correctamente.");
     }
 }
