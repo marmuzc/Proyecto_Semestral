@@ -12,15 +12,13 @@ public class PanelCrearRecorrido extends JPanel {
     private final DefaultComboBoxModel<String> modeloCiudadesDestino;
 
     public PanelCrearRecorrido(Runnable onRecorridoCreado) {
-        this.administrador = Administrador.getInstance(); // Obtiene la instancia única del Singleton
+        this.administrador = Administrador.getInstance();
         this.setLayout(new GridLayout(9, 2, 10, 10));
 
-        // Lista inicial de ciudades
         String[] ciudadesIniciales = {"<<Seleccione Ciudad>>", "Concepción", "Los Angeles", "Chillán", "Santiago", "Talca", "Rancagua"};
         modeloCiudadesOrigen = new DefaultComboBoxModel<>(ciudadesIniciales);
         modeloCiudadesDestino = new DefaultComboBoxModel<>(ciudadesIniciales);
 
-        // Crear componentes
         JLabel lblOrigen = new JLabel("Origen:");
         JComboBox<String> comboOrigen = new JComboBox<>(modeloCiudadesOrigen);
 
@@ -43,7 +41,6 @@ public class PanelCrearRecorrido extends JPanel {
 
         JButton btnCrearRecorrido = new JButton("Crear Recorrido");
 
-        // Añadir componentes al panel
         this.add(lblOrigen);
         this.add(comboOrigen);
         this.add(lblDestino);
@@ -58,17 +55,16 @@ public class PanelCrearRecorrido extends JPanel {
         this.add(txtFecha);
         this.add(lblHora);
         this.add(txtHora);
-        this.add(new JLabel()); // Espaciador
+        this.add(new JLabel());
         this.add(btnCrearRecorrido);
 
-        // Listeners para evitar que las selecciones sean iguales
         comboOrigen.addActionListener(e -> {
             String origen = (String) comboOrigen.getSelectedItem();
             String destino = (String) comboDestino.getSelectedItem();
 
             if (origen != null && origen.equals(destino) && !origen.equals("<<Seleccione Ciudad>>")) {
                 JOptionPane.showMessageDialog(PanelCrearRecorrido.this, "El origen y el destino no pueden ser la misma ciudad.", "Error", JOptionPane.ERROR_MESSAGE);
-                comboOrigen.setSelectedIndex(0); // Restablecer selección
+                comboOrigen.setSelectedIndex(0);
             }
         });
 
@@ -78,7 +74,7 @@ public class PanelCrearRecorrido extends JPanel {
 
             if (destino != null && destino.equals(origen) && !destino.equals("<<Seleccione Ciudad>>")) {
                 JOptionPane.showMessageDialog(PanelCrearRecorrido.this, "El origen y el destino no pueden ser la misma ciudad.", "Error", JOptionPane.ERROR_MESSAGE);
-                comboDestino.setSelectedIndex(0); // Restablecer selección
+                comboDestino.setSelectedIndex(0);
             }
         });
 

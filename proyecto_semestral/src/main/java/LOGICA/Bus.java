@@ -44,7 +44,7 @@ public abstract class Bus {
      * @return El índice actualizado después de agregar los asientos.
      */
     private int agregarAsientos(TipoAsiento tipo, int cantidad, int inicio) {
-        int contador = 0;
+        int contador = 1;
 
         while (contador < cantidad) {
             Asientos aux = crearAsientos.crearAsiento(tipo, inicio + contador);
