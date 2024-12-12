@@ -6,15 +6,23 @@ import javax.swing.*;
 import java.awt.*;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Clase PanelCrearRecorrido que representa el panel para la creación de recorridos.
+ */
 public class PanelCrearRecorrido extends JPanel {
     private final Administrador administrador;
     private final DefaultComboBoxModel<String> modeloCiudadesOrigen;
     private final DefaultComboBoxModel<String> modeloCiudadesDestino;
 
+    /**
+     * Constructor de la clase PanelCrearRecorrido.
+     *
+     * @param onRecorridoCreado Runnable que se ejecutará cuando se cree un recorrido.
+     */
     public PanelCrearRecorrido(Runnable onRecorridoCreado) {
         this.administrador = Administrador.getInstance();
         this.setLayout(new GridLayout(9, 2, 10, 10));
-
+        //Inicializar ciertas ciudades que son importantes
         String[] ciudadesIniciales = {"<<Seleccione Ciudad>>", "Concepción", "Los Angeles", "Chillán", "Santiago", "Talca", "Rancagua"};
         modeloCiudadesOrigen = new DefaultComboBoxModel<>(ciudadesIniciales);
         modeloCiudadesDestino = new DefaultComboBoxModel<>(ciudadesIniciales);
@@ -25,12 +33,12 @@ public class PanelCrearRecorrido extends JPanel {
         JLabel lblDestino = new JLabel("Destino:");
         JComboBox<String> comboDestino = new JComboBox<>(modeloCiudadesDestino);
 
-        JButton btnAgregarCiudad = new JButton("Agregar Ciudad"); // Botón para añadir ciudades
+        JButton btnAgregarCiudad = new JButton("Agregar Ciudad"); //añadir cualquier ciudad por el nombre
 
-        JLabel lblPrecio = new JLabel("Precio:");
+        JLabel lblPrecio = new JLabel("Precio:"); //precio que decida el administrador, luego se le suma el costo del asiento
         JTextField txtPrecio = new JTextField();
 
-        JLabel lblPisos = new JLabel("Número de pisos:");
+        JLabel lblPisos = new JLabel("Número de pisos:"); //tenemos buses de uno o dos pisos
         JComboBox<Integer> comboPisos = new JComboBox<>(new Integer[]{1, 2});
 
         JLabel lblFecha = new JLabel("Fecha (DD/MM):");
@@ -61,7 +69,7 @@ public class PanelCrearRecorrido extends JPanel {
         comboOrigen.addActionListener(e -> {
             String origen = (String) comboOrigen.getSelectedItem();
             String destino = (String) comboDestino.getSelectedItem();
-
+            //verificar que el origen y destino no sean la misma ciudad
             if (origen != null && origen.equals(destino) && !origen.equals("<<Seleccione Ciudad>>")) {
                 JOptionPane.showMessageDialog(PanelCrearRecorrido.this, "El origen y el destino no pueden ser la misma ciudad.", "Error", JOptionPane.ERROR_MESSAGE);
                 comboOrigen.setSelectedIndex(0);
@@ -71,14 +79,15 @@ public class PanelCrearRecorrido extends JPanel {
         comboDestino.addActionListener(e -> {
             String origen = (String) comboOrigen.getSelectedItem();
             String destino = (String) comboDestino.getSelectedItem();
-
+            //verificar que el origen y destino no sean la misma ciudad
             if (destino != null && destino.equals(origen) && !destino.equals("<<Seleccione Ciudad>>")) {
                 JOptionPane.showMessageDialog(PanelCrearRecorrido.this, "El origen y el destino no pueden ser la misma ciudad.", "Error", JOptionPane.ERROR_MESSAGE);
                 comboDestino.setSelectedIndex(0);
             }
+
         });
 
-
+        // Crear recorrido si fechas, horas y ciudades son validas
         btnCrearRecorrido.addActionListener(e -> {
             try {
                 String origen = (String) comboOrigen.getSelectedItem();
@@ -130,6 +139,7 @@ public class PanelCrearRecorrido extends JPanel {
             }
         });
     }
+
 
     /**
      * Verifica si una ciudad ya existe en los modelos.
