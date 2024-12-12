@@ -1,5 +1,4 @@
 package GUI;
-
 import LOGICA.Asientos;
 import LOGICA.Recorrido;
 
@@ -8,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
 public class PanelVistaAsientos extends JPanel {
     private Recorrido recorrido;
     private ArrayList<Asientos> asientos;
@@ -23,7 +23,7 @@ public class PanelVistaAsientos extends JPanel {
         ArrayList<Asientos> asientosPiso2 = new ArrayList<>();
 
         for (Asientos asiento : asientos) {
-            if (asiento.getNumero() <= 25) {
+            if (asiento.getNumero() <= 30) {
                 asientosPiso1.add(asiento);
             } else {
                 asientosPiso2.add(asiento);
@@ -31,7 +31,9 @@ public class PanelVistaAsientos extends JPanel {
         }
 
         add(crearPanelDePiso(asientosPiso1, "Piso 1"));
-        add(crearPanelDePiso(asientosPiso2, "Piso 2"));
+        if (!asientosPiso2.isEmpty()) {
+            add(crearPanelDePiso(asientosPiso2, "Piso 2"));
+        }
     }
 
     private JPanel crearPanelDePiso(ArrayList<Asientos> asientos, String titulo) {
@@ -43,7 +45,7 @@ public class PanelVistaAsientos extends JPanel {
         JPanel gridAsientos = new JPanel(new GridLayout(4, 4, 5, 5));
         for (Asientos asiento : asientos) {
             JButton btnAsiento = new JButton(String.valueOf(asiento.getNumero()));
-            if (asiento.isOcupado()){
+            if (asiento.isOcupado()) {
                 btnAsiento.setBackground(Color.RED);
             } else {
                 btnAsiento.setBackground(Color.GREEN);
@@ -72,7 +74,7 @@ public class PanelVistaAsientos extends JPanel {
         ArrayList<Asientos> asientosPiso2 = new ArrayList<>();
 
         for (Asientos asiento : asientos) {
-            if (asiento.getNumero() <= 25) {
+            if (asiento.getNumero() <= 30) {
                 asientosPiso1.add(asiento);
             } else {
                 asientosPiso2.add(asiento);
@@ -80,7 +82,9 @@ public class PanelVistaAsientos extends JPanel {
         }
 
         add(crearPanelDePiso(asientosPiso1, "Piso 1"));
-        add(crearPanelDePiso(asientosPiso2, "Piso 2"));
+        if (!asientosPiso2.isEmpty()) {
+            add(crearPanelDePiso(asientosPiso2, "Piso 2"));
+        }
         revalidate();
         repaint();
     }

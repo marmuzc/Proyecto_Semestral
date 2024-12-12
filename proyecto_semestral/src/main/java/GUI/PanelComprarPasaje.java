@@ -208,7 +208,7 @@ public class PanelComprarPasaje extends JPanel {
 
         builder.append("Piso 1:\n");
         for (Asientos asiento : asientos) {
-            if (asiento.getNumero() <= 25) {
+            if (asiento.getNumero() <= 30) {
                 builder.append("Asiento ").append(asiento.getNumero())
                         .append(" (").append(asiento.getTipo()).append(") ")
                         .append(asiento.isOcupado() ? " - Ocupado\n" : " - Disponible\n");
@@ -217,7 +217,7 @@ public class PanelComprarPasaje extends JPanel {
 
         builder.append("\nPiso 2:\n");
         for (Asientos asiento : asientos) {
-            if (asiento.getNumero() > 25) {
+            if (asiento.getNumero() > 30) {
                 builder.append("Asiento ").append(asiento.getNumero())
                         .append(" (").append(asiento.getTipo()).append(") ")
                         .append(asiento.isOcupado() ? " - Ocupado\n" : " - Disponible\n");
