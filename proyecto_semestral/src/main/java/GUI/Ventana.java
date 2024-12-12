@@ -4,11 +4,11 @@ import LOGICA.Administrador;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 
 public class Ventana extends JFrame {
-    private final String PASSWORD = "admin123"; // Contraseña predefinida
-    private boolean accesoConcedido = false; // Para recordar si ya se verificó la contraseña
+    private CardLayout cardLayout;
+    private JPanel mainPanel;
+    private boolean accesoConcedido = false;
 
     public Ventana() {
         // Usar el metodo getInstance del Singleton
@@ -22,34 +22,39 @@ public class Ventana extends JFrame {
             panelComprar.actualizarRecorridos(); // Callback para actualizar recorridos
         });
 
+        // Panel de inicio de sesión
+        PanelLogin panelLogin = new PanelLogin(() -> {
+            accesoConcedido = true;
+            cardLayout.show(mainPanel, "Crear Recorrido"); // Mostrar el panel "Crear Recorrido" después del inicio de sesión exitoso
+        });
+
+        // Configurar CardLayout
+        cardLayout = new CardLayout();
+        mainPanel = new JPanel(cardLayout);
+
+        // Añadir los paneles al mainPanel
+        mainPanel.add(panelComprar, "Comprar Pasaje");
+        mainPanel.add(panelLogin, "Login");
+        mainPanel.add(panelCrear, "Crear Recorrido");
+
         // Crear el contenedor de pestañas
         JTabbedPane tabbedPane = new JTabbedPane();
-        tabbedPane.addTab("Comprar Pasaje", panelComprar);
-        tabbedPane.addTab("Crear Recorrido", new JPanel()); // Panel vacío temporalmente
+        tabbedPane.addTab("Comprar Pasaje", null);
+        tabbedPane.addTab("Crear Recorrido", null);
 
         // Listener para controlar el cambio de pestañas
         tabbedPane.addChangeListener(e -> {
             int selectedIndex = tabbedPane.getSelectedIndex();
 
             // Si selecciona la pestaña "Crear Recorrido"
-            if (selectedIndex == 1 && !accesoConcedido) {
-                // Mostrar diálogo de contraseña
-                JPasswordField passwordField = new JPasswordField();
-                int result = JOptionPane.showConfirmDialog(this, passwordField,
-                        "Admin, Ingrese la contraseña", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-                if (result == JOptionPane.OK_OPTION) {
-                    String inputPassword = new String(passwordField.getPassword());
-                    if (inputPassword.equals(PASSWORD)) {
-                        accesoConcedido = true;
-                        tabbedPane.setComponentAt(1, panelCrear); // Reemplazar el panel vacío con `PanelCrearRecorrido`
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Contraseña incorrecta.", "Error", JOptionPane.ERROR_MESSAGE);
-                        tabbedPane.setSelectedIndex(0); // Volver a la pestaña anterior
-                    }
+            if (selectedIndex == 1) {
+                if (accesoConcedido) {
+                    cardLayout.show(mainPanel, "Crear Recorrido"); // Mostrar el panel "Crear Recorrido" directamente si ya se concedió el acceso
                 } else {
-                    tabbedPane.setSelectedIndex(0); // Volver a la pestaña anterior si se cancela
+                    cardLayout.show(mainPanel, "Login"); // Mostrar el panel de inicio de sesión si no se ha concedido el acceso
                 }
+            } else if (selectedIndex == 0) {
+                cardLayout.show(mainPanel, "Comprar Pasaje"); // Cambiar al panel "Comprar Pasaje"
             }
         });
 
@@ -58,7 +63,8 @@ public class Ventana extends JFrame {
         this.setSize(1080, 720);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
-        this.add(tabbedPane, BorderLayout.CENTER);
+        this.add(tabbedPane, BorderLayout.NORTH); // Colocar las pestañas en la parte superior
+        this.add(mainPanel, BorderLayout.CENTER); // Colocar el mainPanel en el centro
         this.setVisible(true);
     }
 }

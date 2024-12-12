@@ -197,13 +197,7 @@ public class PanelComprarPasaje extends JPanel {
         ArrayList<Recorrido> recorridos = administrador.getRecorridos();
 
         for (Recorrido recorrido : recorridos) {
-            String infoRecorrido = String.format(
-                    "%s -> %s (%s %s)",
-                    recorrido.getOrigen(),
-                    recorrido.getDestino(),
-                    recorrido.getFecha(),
-                    recorrido.getHora()
-            );
+            String infoRecorrido = recorrido.getOrigen() + " -> " + recorrido.getDestino() + " (" + recorrido.getFecha() + " " + recorrido.getHora() + ")";
             comboRecorridos.addItem(infoRecorrido);
         }
 

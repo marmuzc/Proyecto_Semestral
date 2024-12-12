@@ -11,15 +11,28 @@ public class PanelLogin extends JPanel {
 
     public PanelLogin(Runnable onLoginSuccess) {
         this.onLoginSuccess = onLoginSuccess;
-        this.setLayout(new GridLayout(3, 1, 10, 10)); // 3 filas, 1 columna
+        this.setLayout(new GridBagLayout()); // Utilizar GridBagLayout
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL; // Ajusta componentes horizontalmente
+        gbc.insets = new Insets(10, 10, 10, 10); // Margen entre componentes
 
         JLabel lblPassword = new JLabel("Admin, Ingrese la contraseña:");
-        JPasswordField txtPassword = new JPasswordField();
-        JButton btnLogin = new JButton("Ingresar");
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        this.add(lblPassword, gbc);
 
-        this.add(lblPassword);
-        this.add(txtPassword);
-        this.add(btnLogin);
+        JPasswordField txtPassword = new JPasswordField();
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.ipady = 10; // Alto del campo de texto
+        this.add(txtPassword, gbc);
+
+        JButton btnLogin = new JButton("Ingresar");
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.ipady = 10; // Alto del botón
+        this.add(btnLogin, gbc);
 
         btnLogin.addActionListener(new ActionListener() {
             @Override
