@@ -50,7 +50,6 @@ public class PanelComprarPasaje extends JPanel {
 
                 JFrame ventanaAsientos = new JFrame("Asientos por piso");
                 ventanaAsientos.setLayout(new BorderLayout());
-
                 panelAsientos = new PanelAsientos(recorrido, event -> {
                     Asientos asientoSeleccionado = (Asientos) event.getSource();
                     if (asientoSeleccionado.isOcupado()) {
@@ -59,7 +58,7 @@ public class PanelComprarPasaje extends JPanel {
                                 "Error", JOptionPane.ERROR_MESSAGE);
                     } else {
                         int numeroAsiento = asientoSeleccionado.getNumero();
-                        int precio = recorrido.comprarAsiento(numeroAsiento);
+                        int precio = asientoSeleccionado.getPrecio(); // Obtener precio del asiento
 
                         int confirm = JOptionPane.showConfirmDialog(ventanaAsientos,
                                 "¿Desea comprar el asiento " + numeroAsiento + "?\n" +
@@ -69,24 +68,28 @@ public class PanelComprarPasaje extends JPanel {
                                         "\n- Precio: " + precio + " CLP",
                                 "Confirmar Compra", JOptionPane.YES_NO_OPTION);
 
-                        if (confirm == JOptionPane.YES_OPTION && precio != -1) {
-                            mostrarAsientosDisponibles(recorrido);
-                            panelAsientos.actualizarEstadoAsientos();
-                            JOptionPane.showMessageDialog(ventanaAsientos,
-                                    "Asiento comprado exitosamente.\n" +
-                                            "Detalles:\n- Asiento: " + numeroAsiento + "\n- Tipo de asiento: " + asientoSeleccionado.getTipo() +
-                                            "\n- Recorrido: " + recorrido.getOrigen() + " -> " + recorrido.getDestino() +
-                                            "\n- Fecha: " + recorrido.getFecha() + "\n- Hora: " + recorrido.getHora() +
-                                            "\n- Precio: " + precio + " CLP",
-                                    "Compra Exitosa",
-                                    JOptionPane.INFORMATION_MESSAGE);
-                        } else if (precio == -1) {
-                            JOptionPane.showMessageDialog(ventanaAsientos,
-                                    "El asiento ya está ocupado o no existe.",
-                                    "Error", JOptionPane.ERROR_MESSAGE);
+                        if (confirm == JOptionPane.YES_OPTION) {
+                            int totalPrecio = recorrido.comprarAsiento(numeroAsiento);
+                            if (totalPrecio != -1) {
+                                mostrarAsientosDisponibles(recorrido);
+                                panelAsientos.actualizarEstadoAsientos();
+                                JOptionPane.showMessageDialog(ventanaAsientos,
+                                        "Asiento comprado exitosamente.\n" +
+                                                "Detalles:\n- Asiento: " + numeroAsiento + "\n- Tipo de asiento: " + asientoSeleccionado.getTipo() +
+                                                "\n- Recorrido: " + recorrido.getOrigen() + " -> " + recorrido.getDestino() +
+                                                "\n- Fecha: " + recorrido.getFecha() + "\n- Hora: " + recorrido.getHora() +
+                                                "\n- Precio: " + totalPrecio + " CLP",
+                                        "Compra Exitosa",
+                                        JOptionPane.INFORMATION_MESSAGE);
+                            } else {
+                                JOptionPane.showMessageDialog(ventanaAsientos,
+                                        "El asiento ya no está disponible.",
+                                        "Error", JOptionPane.ERROR_MESSAGE);
+                            }
                         }
                     }
                 });
+
 
                 ventanaAsientos.add(panelAsientos, BorderLayout.CENTER);
                 ventanaAsientos.setSize(1080, 720);

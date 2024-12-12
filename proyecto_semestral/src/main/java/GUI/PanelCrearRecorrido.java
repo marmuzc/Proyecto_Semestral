@@ -1,7 +1,6 @@
 package GUI;
 
 import LOGICA.Administrador;
-import LOGICA.Recorrido;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,12 +10,10 @@ public class PanelCrearRecorrido extends JPanel {
     private final Administrador administrador;
     private final DefaultComboBoxModel<String> modeloCiudadesOrigen;
     private final DefaultComboBoxModel<String> modeloCiudadesDestino;
-    private Recorrido recorrido;
 
     public PanelCrearRecorrido(Runnable onRecorridoCreado) {
         this.administrador = Administrador.getInstance();
         this.setLayout(new GridLayout(9, 2, 10, 10));
-
 
         String[] ciudadesIniciales = {"<<Seleccione Ciudad>>", "Concepción", "Los Angeles", "Chillán", "Santiago", "Talca", "Rancagua"};
         modeloCiudadesOrigen = new DefaultComboBoxModel<>(ciudadesIniciales);
@@ -69,7 +66,6 @@ public class PanelCrearRecorrido extends JPanel {
                 JOptionPane.showMessageDialog(PanelCrearRecorrido.this, "El origen y el destino no pueden ser la misma ciudad.", "Error", JOptionPane.ERROR_MESSAGE);
                 comboOrigen.setSelectedIndex(0);
             }
-
         });
 
         comboDestino.addActionListener(e -> {
@@ -97,39 +93,31 @@ public class PanelCrearRecorrido extends JPanel {
                     return;
                 }
 
-                if (!Recorrido.isFechaValida(fecha)) {
-                    JOptionPane.showMessageDialog(PanelCrearRecorrido.this, "La fecha es inválida o no cumple con el formato DD/MM.", "Error", JOptionPane.ERROR_MESSAGE);
+                if (!fecha.matches("\\d{2}/\\d{2}")) {
+                    JOptionPane.showMessageDialog(PanelCrearRecorrido.this, "La fecha debe tener el formato DD/MM.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
-                if (!Recorrido.isHoraValida(hora)) {
-                    JOptionPane.showMessageDialog(PanelCrearRecorrido.this, "La hora es inválida o no cumple con el formato HH:mm.", "Error", JOptionPane.ERROR_MESSAGE);
+                if (!hora.matches("\\d{2}:\\d{2}")) {
+                    JOptionPane.showMessageDialog(PanelCrearRecorrido.this, "La hora debe tener el formato HH:mm.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
-                Recorrido recorrido = administrador.crearRecorrido(origen, destino, precio, pisos, fecha, hora);
+                administrador.crearRecorrido(origen, destino, precio, pisos, fecha, hora);
+                JOptionPane.showMessageDialog(PanelCrearRecorrido.this, "Recorrido creado exitosamente.");
 
-                if (recorrido != null) {
-                    JOptionPane.showMessageDialog(PanelCrearRecorrido.this, "Recorrido creado exitosamente.");
-                    onRecorridoCreado.run();
+                onRecorridoCreado.run();
 
-                    comboOrigen.setSelectedIndex(0);
-                    comboDestino.setSelectedIndex(0);
-                    txtPrecio.setText("");
-                    comboPisos.setSelectedIndex(0);
-                    txtFecha.setText("");
-                    txtHora.setText("");
-                } else {
-                    JOptionPane.showMessageDialog(PanelCrearRecorrido.this, "Error al crear el recorrido. Verifique los datos.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
+                comboOrigen.setSelectedIndex(0);
+                comboDestino.setSelectedIndex(0);
+                txtPrecio.setText("");
+                comboPisos.setSelectedIndex(0);
+                txtFecha.setText("");
+                txtHora.setText("");
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(PanelCrearRecorrido.this, "El precio debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
-            } catch (IllegalArgumentException ex) {
-                JOptionPane.showMessageDialog(PanelCrearRecorrido.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
-
-
 
         btnAgregarCiudad.addActionListener(e -> {
             String nuevaCiudad = JOptionPane.showInputDialog(PanelCrearRecorrido.this, "Ingrese el nombre de la nueva ciudad:");
