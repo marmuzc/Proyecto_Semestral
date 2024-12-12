@@ -64,7 +64,7 @@ public class PanelComprarPasaje extends JPanel {
                         int precio = recorrido.comprarAsiento(numeroAsiento);
 
                         int confirm = JOptionPane.showConfirmDialog(ventanaAsientos,
-                                "¿Desea comprar el asiento " + numeroAsiento + "?" +
+                                "¿Desea comprar el asiento " + numeroAsiento + "?\n" +
                                         "Detalles:\n- Asiento: " + numeroAsiento + "\n- Tipo de asiento: " + asientoSeleccionado.getTipo() +
                                         "\n- Recorrido: " + recorrido.getOrigen() + " -> " + recorrido.getDestino() +
                                         "\n- Fecha: " + recorrido.getFecha() + "\n- Hora: " + recorrido.getHora() +
@@ -91,7 +91,7 @@ public class PanelComprarPasaje extends JPanel {
                 });
 
                 ventanaAsientos.add(panelVistaAsientos, BorderLayout.CENTER);
-                ventanaAsientos.setSize(800, 600);
+                ventanaAsientos.setSize(1080, 720);
                 ventanaAsientos.setLocationRelativeTo(null);
                 ventanaAsientos.setVisible(true);
             } else {

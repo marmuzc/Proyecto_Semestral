@@ -11,8 +11,8 @@ public class BusUnPiso extends Bus {
      */
     public BusUnPiso() {
         super();
-        AsientoNormal = 30;
-        AsientoSemiCama = 10;
+        AsientoNormal = 25;
+        AsientoSemiCama = 15;
         AsientoCama = 0;
         crearAsientos();
     }

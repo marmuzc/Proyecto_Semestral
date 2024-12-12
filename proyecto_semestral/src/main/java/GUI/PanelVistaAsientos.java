@@ -8,7 +8,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 public class PanelVistaAsientos extends JPanel {
     private Recorrido recorrido;
     private ArrayList<Asientos> asientos;
@@ -19,21 +18,16 @@ public class PanelVistaAsientos extends JPanel {
         this.asientos = recorrido.getBus().getAsientosArray();
         this.onAsientoSeleccionado = onAsientoSeleccionado;
 
-        setLayout(new GridLayout(2, 1, 10, 10));
+        setLayout(new GridLayout(1, 1, 10, 10));
         ArrayList<Asientos> asientosPiso1 = new ArrayList<>();
         ArrayList<Asientos> asientosPiso2 = new ArrayList<>();
 
-        int totalAsientos = asientos.size();
-        int asientosPorPiso = totalAsientos / 2;
-
-        int contador = 1;
         for (Asientos asiento : asientos) {
-            if (contador <= asientosPorPiso) {
+            if (asiento.getNumero() <= 25) {
                 asientosPiso1.add(asiento);
             } else {
                 asientosPiso2.add(asiento);
             }
-            contador++;
         }
 
         add(crearPanelDePiso(asientosPiso1, "Piso 1"));
@@ -46,7 +40,7 @@ public class PanelVistaAsientos extends JPanel {
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 16));
         panelPiso.add(lblTitulo, BorderLayout.NORTH);
 
-        JPanel gridAsientos = new JPanel(new GridLayout(5, 5, 5, 5)); // Ajusta el tamaño de la cuadrícula según sea necesario
+        JPanel gridAsientos = new JPanel(new GridLayout(4, 4, 5, 5));
         for (Asientos asiento : asientos) {
             JButton btnAsiento = new JButton(String.valueOf(asiento.getNumero()));
             if (asiento.isOcupado()){
@@ -77,17 +71,12 @@ public class PanelVistaAsientos extends JPanel {
         ArrayList<Asientos> asientosPiso1 = new ArrayList<>();
         ArrayList<Asientos> asientosPiso2 = new ArrayList<>();
 
-        int totalAsientos = asientos.size();
-        int asientosPorPiso = totalAsientos / 2;
-
-        int contador = 1;
         for (Asientos asiento : asientos) {
-            if (contador <= asientosPorPiso) {
+            if (asiento.getNumero() <= 25) {
                 asientosPiso1.add(asiento);
             } else {
                 asientosPiso2.add(asiento);
             }
-            contador++;
         }
 
         add(crearPanelDePiso(asientosPiso1, "Piso 1"));
@@ -95,5 +84,4 @@ public class PanelVistaAsientos extends JPanel {
         revalidate();
         repaint();
     }
-
 }

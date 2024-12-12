@@ -11,9 +11,9 @@ public class BusDosPisos extends Bus {
      */
     public BusDosPisos() {
         super();
-        AsientoNormal = 30;
+        AsientoNormal = 25;
         AsientoSemiCama = 10;
-        AsientoCama = 10;
+        AsientoCama = 15;
         crearAsientos();
     }
 
