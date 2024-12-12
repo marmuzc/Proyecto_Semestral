@@ -1,5 +1,5 @@
 # proyecto_semestral
-istema de reserva de asientos de autobús - Grupo 3. 
+Sistema de reserva de asientos de autobús - Grupo 3. 
 
 Integrantes: Mariel Muñoz Castillo, Jhostian San Martin Morales 
 
@@ -47,7 +47,7 @@ Hablando de problemas encontrados, la mayor parte de los problemas los tuvimos a
 
 Además, durante el desarrollo, nos dimos cuenta de varias funcionalidades necesarias en las que no habíamos pensado con anterioridad, como la implementación de una contraseña para el administrador, y nos surgieron complicaciones implementando funcionalidades que el programa debía tener, como la función para poder eliminar una reserva, que finalmente, por falta de tiempo, no pudimos implementar. 
 
-También tuvimos varios problemas con el tema de los plazos, pero eso es netamente por una dificultad al dividir nuestros tiempos y enfocarnos en el proyecto. Aparte de esto, tuvimos también los típicos problemas lógicos, pues, en primer momento, no teníamos mucha seguridad de si crear nosotros los recorridos y asignarles un precio a través del administrador o crearlos con un enum y así, teniendo ciertos kilómetros de viaje, calcular un precio para dichos recorridos. Finalmente, al decidir tener un administrador, nos pareció lo más correcto que el precio fuera algo que el administrador asignara, al igual que los orígenes/destinos, etc. 
+También tuvimos varios problemas con el tema de los plazos, pero eso es netamente por una dificultad al dividir nuestros tiempos y enfocarnos en el proyecto. Aparte de esto, tuvimos también los típicos problemas lógicos, pues, en primer momento, no teníamos mucha seguridad de si crear nosotros los recorridos y asignarles un precio a través del administrador o crearlos con un enum y así, teniendo ciertos kilómetros de viaje, calcular un precio para dichos recorridos. Otra cosa que no pudimos implementar, debido a que nos enfocamos en crear la interfaz gráfica fueron más patrones de diseño, pues cuando ya teníamos todo listo en esta parte, recordamos que podíamos implementar alguno, por ejemplo, builder, pero se nos hizo complicado pues ya teníamos practicamente todo el código completado y añadir nuevas cosas nos comenzó a generar demasiados errores. Finalmente, al decidir tener un administrador, nos pareció lo más correcto que el precio fuera algo que el administrador asignara, al igual que los orígenes/destinos, etc. 
 
 MODO DE USO RAPIDO ANTES DE EMPEZAR: 
 
